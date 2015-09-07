@@ -16,10 +16,18 @@ class Auction(models.Model):
     endDate = models.DateTimeField(null=False)
     status = models.CharField(max_length=50)
 
+    def __str__(self):
+        return "Seller : %s - Title : %s - minPrice : %s - maxPrice : %s - startDate : %s" % (self.seller.username, self.title, self.minPrice, self.maxPrice, str(self.startDate))
+
+    #def create(self, seller, title, minPrice, startDate, duration, ):
+
+
 class Bid(models.Model):
     auction = models.ForeignKey(Auction)
     time = models.DateTimeField(timezone.now())
     price = models.DecimalField(max_digits=10, decimal_places=2)
     bidder = models.ForeignKey('auth.User')
+
+    #def __str__(self):
 
 
