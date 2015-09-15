@@ -1,0 +1,34 @@
+
+
+{% extends "auction/index.html" %}
+
+{% block form_create %}
+    <div class="container">
+        <div class="row" style="padding: 100px 15px">
+            <div class="col-md-8">
+                <form method="post" action="/auction/create/">
+                    {% csrf_token %}
+                    {% comment %}<div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" placeholder="Title">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" class="form-control" id="description" placeholder="Description">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Due Date</label>
+                        <input type="datetime" class="form-control" id="due_date" placeholder="Due Date">
+                    </div>
+                    <div class="form-group">
+                        <label for="start_price">Start Price</label>
+                        <input type="text" class="form-control" id="start_price" placeholder="Start Price">
+                    </div>{% endcomment %}
+                    {{ form.as_p }}
+
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

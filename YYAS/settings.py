@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'yyasweb',
+    'debug_toolbar',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,6 +54,9 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'YYAS.urls'
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+)
 
 TEMPLATES = [
     {
@@ -104,4 +108,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_URL = reverse_lazy('login')
-LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGIN_REDIRECT_URL = reverse_lazy('auction/create')
+LOGOUT_REDIRECT_URL = reverse_lazy('home')
