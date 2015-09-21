@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    {% load bootstrap3 %}
+</head>
+
+<body>
+<!--nav bar-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Bidding Site - {{ request.user.username }}</a>
+        </div>
+        {% if user.is_authenticated %}
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'django.contrib.auth.views.logout' %}">Log Out</a></li>
+                    <li><a href="{% url 'create_auction' %}">Create New Auction</a></li>
+                </ul>
+            </div><!-- /.nav-collapse -->
+        {% else %}
+            <div id="navbar" class="navbar-collapse collapse">
+                <form method="post" class="navbar-form navbar-right" action="{% url 'custom_login' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" placeholder="Email" class="form-control" name="username">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-success">Sign in</button>
+                    <input type="hidden" name="next" value="{% url 'create_auction' %}"/>
+                </form>
+            </div>
+        {% endif %}
+        <!--/.navbar-collapse -->
+    </div>
+</nav>
+<div class="container">
+    <div class="row" style="padding: 100px 15px">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{% extends 'auction/layout.html' %}
+
+{% block content %}
+    <h4>Title : {{ auction.title }}</h4>
+    <p>{{ auction.description }}</p>
+    <h3>Seller : {{ auction.seller.username }}</h3>
+    <h3>End Date : {{ auction.endDate|date:"jS \o\f F" }}</h3>
+    <h3>Max Price : {{ auction.seller.username }}</h3>
+
+    {% if user.is_authenticated %}
+        {% if auction.isActive %}
+            {% load bootstrap3 %}
+            {#form here#}
+            <form method="post" action="{% url 'place_bid' %}">
+            {% csrf_token %}
+                {% bootstrap_form form %}
+                <input type="hidden" name="auction_id" value="{{ auction.pk }}">
+                <button type="submit" class="btn btn-default">Place Bid</button>
+            </form>
+        {% elif auction.isBanned %}
+            <h4>Auction is banned</h4>
+        {% else %}
+            <h4>Auction is resolved</h4>
+        {% endif %}
+    {% else %}
+        <h4>Please log in to place bid</h4>
+    {% endif %}
+{% endblock %}

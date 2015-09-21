@@ -5,6 +5,10 @@ from django.utils import timezone
 from datetime import datetime, timedelta
 from django.forms import ModelForm
 
+class AuctionState:
+    active = 'active'
+    banned = 'banned'
+    resolved = 'resolved'
 
 class Auction(models.Model):
     epsilon = 0.01
@@ -15,13 +19,20 @@ class Auction(models.Model):
     maxPrice = models.DecimalField(max_digits=10, decimal_places=2)
     maxBidId = models.CharField(max_length=20, default='')
     description = models.TextField()
-    startDate = models.DateTimeField(timezone.now())
+    startDate = models.DateTimeField(default=timezone.now())
     endDate = models.DateTimeField(null=False)
-    status = models.CharField(max_length=50)
+    status = models.CharField(max_length=50, default= AuctionState.active)
 
     def __str__(self):
         return "Seller : %s - Title : %s - minPrice : %s - maxPrice : %s - startDate : %s" % (
             self.seller.username, self.title, self.minPrice, self.maxPrice, str(self.startDate))
+    @property
+    def isActive(self):
+        return self.status == AuctionState.active
+
+    @property
+    def isBanned(self):
+        return self.status == AuctionState.banned
 
     @staticmethod
     def create(self, seller, description, title, minPrice, end):
@@ -49,10 +60,15 @@ class Auction(models.Model):
         auc.description = description
         auc.save()
 
+class AuctionForm(ModelForm):
+    class Meta:
+        model = Auction
+        fields = ('title', 'minPrice', 'description', 'endDate',)
+        exclude=('startDate',)
 
 class Bid(models.Model):
     auction = models.ForeignKey(Auction)
-    time = models.DateTimeField(timezone.now())
+    time = models.DateTimeField(default=timezone.now())
     price = models.DecimalField(max_digits=10, decimal_places=2)
     bidder = models.ForeignKey('auth.User')
 
@@ -65,14 +81,11 @@ class Bid(models.Model):
     def list(self):
         return Bid.objects.all()
 
-
-class AuctionState:
-    active = 'active'
-    banned = 'banned'
-    resolved = 'resolved'
-
-
-class AuctionForm(ModelForm):
+class BidForm(ModelForm):
     class Meta:
-        model = Auction
-        fields = ('title', 'minPrice', 'description', 'endDate',)
+        model = Bid
+        fields = ('price',)
+
+
+
+

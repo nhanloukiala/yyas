@@ -1,0 +1,17 @@
+{% extends 'auction/layout.html' %}
+
+{% block content %}
+    {% for auction in auctions %}
+        <div class="col-sm-6 col-md-4">
+            <h3>Title : {{ auction.title }}</h3>
+
+            <p>Description : {{ auction.description }}</p> </br>
+            <h6>Max Bid : {{ auction.maxPrice }}</h6>
+            <h6>End Date : {{ auction.endDate|date:"jS \o\f F" }}</h6>
+            <h6>Seller : {{ auction.seller.username }}</h6>
+
+            <a class="btn btn-primary" href="/auction/{{ auction.pk }}" role="button">View details &raquo;</a>
+        </div>
+    {% endfor %}
+{% endblock %}
+
