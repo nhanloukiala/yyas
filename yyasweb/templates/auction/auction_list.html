@@ -2,6 +2,7 @@
 
 {% block content %}
     {% for auction in auctions %}
+        {% load bootstrap3 %}
         <div class="col-sm-6 col-md-4">
             <h3>Title : {{ auction.title }}</h3>
 

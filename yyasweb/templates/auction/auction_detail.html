@@ -5,14 +5,26 @@
     <p>{{ auction.description }}</p>
     <h3>Seller : {{ auction.seller.username }}</h3>
     <h3>End Date : {{ auction.endDate|date:"jS \o\f F" }}</h3>
-    <h3>Max Price : {{ auction.seller.username }}</h3>
+    <h3>Max Price : {{ maxbid }}</h3>
+    <h3>Start Price : {{ auction.minPrice }}</h3>
 
     {% if user.is_authenticated %}
         {% if auction.isActive %}
             {% load bootstrap3 %}
-            {#form here#}
+
+            {#ban form here#}
+            {% if user.is_superuser %}
+                <form method="post" action="{% url "ban_auction" %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="auction_id" value="{{ auction.pk }}">
+                    <button type="submit" class="btn btn-danger">Ban this auction</button>
+                </form>
+                <br>
+            {% endif %}
+
+            {#bid form here#}
             <form method="post" action="{% url 'place_bid' %}">
-            {% csrf_token %}
+                {% csrf_token %}
                 {% bootstrap_form form %}
                 <input type="hidden" name="auction_id" value="{{ auction.pk }}">
                 <button type="submit" class="btn btn-default">Place Bid</button>
@@ -22,6 +34,11 @@
         {% else %}
             <h4>Auction is resolved</h4>
         {% endif %}
+
+        {% for bid in bids %}
+            <br>
+            <h5> Bidder : {{ bid.bidder.username }} - {{ bid.time }} - {{ bid.price }}</h5>
+        {% endfor %}
     {% else %}
         <h4>Please log in to place bid</h4>
     {% endif %}
