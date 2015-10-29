@@ -9,8 +9,6 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     {% load bootstrap3 %}
 </head>
 
@@ -34,6 +32,13 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{% url 'django.contrib.auth.views.logout' %}">Log Out</a></li>
                     <li><a href="{% url 'create_auction' %}">Create New Auction</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Currency - {{ request.session.currency }} <span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu" style="height: auto;max-height: 200px;overflow-x: hidden" role="menu">
+                            {{ dropdown | safe }}
+                        </ul>
+                    </li>
                 </ul>
             </div><!-- /.nav-collapse -->
         {% else %}
@@ -50,7 +55,9 @@
                     <input type="hidden" name="next" value="{% url 'create_auction' %}"/>
                 </form>
                 <div class="navbar-form navbar-right">
-                    <a href="{% url 'register' %}"><button type="submit" class="btn btn-primary">Register</button></a>
+                    <a href="{% url 'register' %}">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </a>
                 </div>
             </div>
         {% endif %}
@@ -63,5 +70,9 @@
         {% endblock %}
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
 </html>

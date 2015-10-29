@@ -3,11 +3,12 @@
 {% block content %}
     {% for auction in auctions %}
         {% load bootstrap3 %}
+        {% load templatehelpers %}
         <div class="col-sm-6 col-md-4">
             <h3>Title : {{ auction.title }}</h3>
 
             <p>Description : {{ auction.description }}</p> </br>
-            <h6>Max Bid : {{ auction.maxPrice }}</h6>
+            <h6>Max Bid : {% multiply auction.maxPrice displayRate %} &nbsp; {{ request.session.currency }}</h6>
             <h6>End Date : {{ auction.endDate|date:"jS \o\f F" }}</h6>
             <h6>Seller : {{ auction.seller.username }}</h6>
 

@@ -1,7 +1,8 @@
 __author__ = 'nhan'
 from models import *
-from django.forms import ModelForm
+from django.forms import ModelForm, DateTimeInput
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from YYAS import settings
 
 class AuctionForm(ModelForm):
     id = None
@@ -9,6 +10,8 @@ class AuctionForm(ModelForm):
         model = Auction
         fields = ('title', 'minPrice', 'description', 'endDate',)
         exclude = ('startDate',)
+        labels = {'endDate' : 'End Date ' + settings.DATETIME_INPUT_FORMAT}
+        widgets = {'endDate' : DateTimeInput(format=settings.DATETIME_INPUT_FORMAT),}
 
 class BidForm(ModelForm):
     class Meta:

@@ -1,12 +1,13 @@
 {% extends 'auction/layout.html' %}
 
 {% block content %}
+    {% load templatehelpers %}
     <h4>Title : {{ auction.title }}</h4>
     <p>{{ auction.description }}</p>
     <h3>Seller : {{ auction.seller.username }}</h3>
-    <h3>End Date : {{ auction.endDate|date:"jS \o\f F" }}</h3>
-    <h3>Max Price : {{ maxbid }}</h3>
-    <h3>Start Price : {{ auction.minPrice }}</h3>
+    <h3>End Date : {{ auction.endDate|date:"D d M Y" }} {{ auction.endDate|time:"H:i" }}</h3>
+    <h3>Max Price : {% multiply maxbid displayRate %} &nbsp; {{ request.session.currency }}</h3>
+    <h3>Start Price : {% multiply auction.minPrice displayRate %}&nbsp; {{ request.session.currency }}</h3>
 
     {% if user.is_authenticated %}
         {% if auction.isActive %}
@@ -20,6 +21,10 @@
                     <button type="submit" class="btn btn-danger">Ban this auction</button>
                 </form>
                 <br>
+            {% endif %}
+
+            {% if is_owner %}
+                <a href="/auction/edit/{{ auction.pk }}">Edit Auction</a>
             {% endif %}
 
             {#bid form here#}

@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^auction/search/', views.search, name='search'),
     url(r'^auction/ban/$', views.ban_auction, name='ban_auction'),
     url(r'^auction/unban/(?P<pk>\d+)$', views.unban_auction, name='unban_auction'),
+    url(r'^currency/$', views.change_currency, name ='currency_change')
 ]

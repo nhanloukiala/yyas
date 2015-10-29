@@ -13,6 +13,12 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from django.core.urlresolvers import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
+
+LANGUAGES = (
+    ('en', _('English')),
+    ('vi', _('Vietnamese')),
+)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -29,6 +35,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
 
 # Application definition
 
@@ -42,6 +49,8 @@ INSTALLED_APPS = (
     'yyasweb',
     'debug_toolbar',
     'bootstrap3',
+    "django_cron",
+    "rest_framework",
 )
 
 MIDDLEWARE_CLASSES = (
@@ -50,6 +59,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -72,6 +82,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.i18n',
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -109,8 +121,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-#LOGIN_URL = reverse_lazy('login')
+# LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('auction_list')
 LOGOUT_REDIRECT_URL = reverse_lazy('home')
+DATETIME_INPUT_FORMAT = '%Y-%m-%d %H:%M'
+TIME_GAP = 3
 
+# Sending email properties
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'tantrokiniem@gmail.com'
+EMAIL_HOST_PASSWORD = 'xyhzzoddgoafbyfh'
+EMAIL_PORT = 587
 
+# Curency property
+CURRENCY_FETCH_URL = 'https://openexchangerates.org/api/latest.json?app_id=0b598d5d2f014d7883905f71ab61add4'
+TEMP_CURRENCY = 'currency'
+BASE_CURRENCY = 'EUR'
+
+# Email messages
+BAN_HEADER = "YOUR AUCTION HAS BEEN BANNED"
+BAN_BIDDER_HEADER = "THE AUCTION YOU BIDDED HAS BEEN BANNED"
+BAN_CONTENT = "AUCTION : %s - has been banned at %s"
+
+RESOLVE_HEADER = "YOUR AUCTION HAS BEEN RESOLVED"
+RESOLVE_BIDDER_HEADER = "THE AUCTION YOU BIDDED HAS BEEN RESOLVED"
+RESOLVE_CONTENT = "AUCTION : %s - has been resolved at %s"
