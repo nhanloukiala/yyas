@@ -1,0 +1,19 @@
+{% extends "auction/layout.html" %}
+
+{% block content %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="page-header">
+        <h4>Your token is:</h4>
+    </div>
+
+    <div class="col-md-8">
+        <h1>{{ token }}</h1>
+    </div>
+{% endblock %}

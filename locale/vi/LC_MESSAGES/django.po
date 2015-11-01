@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-29 21:49+0000\n"
+"POT-Creation-Date: 2015-10-30 20:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,3 +25,62 @@ msgstr ""
 #: YYAS/settings.py:20
 msgid "Vietnamese"
 msgstr ""
+
+#: yyasweb/templates/auction/auction_detail.html:6
+#: yyasweb/templates/auction/auction_list.html:10
+msgid "Title"
+msgstr "Chủ đề"
+
+#: yyasweb/templates/auction/auction_detail.html:7
+#: yyasweb/templates/auction/auction_list.html:12
+msgid "Description"
+msgstr "Mô tả"
+
+#: yyasweb/templates/auction/auction_detail.html:8
+#: yyasweb/templates/auction/auction_list.html:15
+msgid "Seller"
+msgstr "Người bán"
+
+#: yyasweb/templates/auction/auction_detail.html:9
+#: yyasweb/templates/auction/auction_list.html:14
+msgid "End Date"
+msgstr "Ngày kết thúc"
+
+#: yyasweb/templates/auction/auction_detail.html:10
+msgid "Max Price"
+msgstr "Giá hiện tại"
+
+#: yyasweb/templates/auction/auction_detail.html:11
+msgid "Start Price"
+msgstr "Giá bắt đầu"
+
+#: yyasweb/templates/auction/auction_list.html:13
+#, fuzzy
+#| msgid "Max Price"
+msgid "Max Bid"
+msgstr "Giá hiện tại"
+
+#: yyasweb/templates/auction/layout.html:21
+msgid "Bidding Site"
+msgstr "Site đấu giá"
+
+#: yyasweb/templates/auction/layout.html:28
+msgid "Search for..."
+msgstr "Tìm kiếm"
+
+#: yyasweb/templates/auction/layout.html:34
+msgid "Log Out"
+msgstr "Đăng xuất"
+
+#: yyasweb/templates/auction/layout.html:35
+msgid "Create New Auction"
+msgstr "Tạo đấu giá"
+
+#: yyasweb/templates/auction/layout.html:37
+msgid "Currency"
+msgstr "Tiền tệ"
+
+#~ msgid "Search"
+#~ msgstr "Tìm kiếm"
+msgid "My API token"
+msgstr "API token của tôi"

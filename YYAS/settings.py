@@ -33,9 +33,9 @@ SECRET_KEY = '7m9g^jgb(8mb7m3jh3(hv^t*)hn9#(vpr9f%gq06!51*9+g!d_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '127.0.0.1:8000', 'localhost:8000', '*',]
 
-LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),'locale')
 
 # Application definition
 
@@ -47,11 +47,19 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'yyasweb',
-    'debug_toolbar',
     'bootstrap3',
     "django_cron",
     "rest_framework",
+    'rest_framework.authtoken',
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -132,7 +140,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'tantrokiniem@gmail.com'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = 'xyhzzoddgoafbyfh'
 EMAIL_PORT = 587
 
 # Curency property
@@ -143,8 +151,17 @@ BASE_CURRENCY = 'EUR'
 # Email messages
 BAN_HEADER = "YOUR AUCTION HAS BEEN BANNED"
 BAN_BIDDER_HEADER = "THE AUCTION YOU BIDDED HAS BEEN BANNED"
-BAN_CONTENT = "AUCTION : %s - has been banned at %s"
+BAN_CONTENT = "AUCTION : %s - has been banned"
 
 RESOLVE_HEADER = "YOUR AUCTION HAS BEEN RESOLVED"
 RESOLVE_BIDDER_HEADER = "THE AUCTION YOU BIDDED HAS BEEN RESOLVED"
-RESOLVE_CONTENT = "AUCTION : %s - has been resolved at %s"
+RESOLVE_CONTENT = "AUCTION : has been resolved at %s"
+
+BID_HEADER = "NEW BID PLACED"
+BID_CONTENT = "Somebody just placed a new bid in your auction at %s"
+
+DEFAULT_LANGUAGE = 'en'
+LANGUAGE_CHOICES = (('en', 'English'), ('vi', 'Vietnamese'),)
+
+ERROR_CONCURRENCY_MESSAGE = 'This auction has been changed. Please reload the page and re-submit your bid'
+

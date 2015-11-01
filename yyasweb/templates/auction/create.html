@@ -1,20 +1,57 @@
 {% extends "auction/layout.html" %}
 
 {% block content %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><h2 style="color: red">{{ message }}</h2></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     <div class="page-header">
         <h1>Create New Auction</h1>
     </div>
 
     <div class="col-md-8">
         {% load bootstrap3 %}
-        <form method="post" action="/auction/create/">
+        <form method="post" action="/auction/create/" id="form-create-auction">
             {% csrf_token %}
             {% bootstrap_form form %}
-            {% if id%}
+            {% if id %}
                 <input type="hidden" value="{{ id }}" name="id">
             {% endif %}
             {{ id.render }}
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+                Submit
+            </button>
         </form>
     </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Auction Create Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to save this auction?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" id="form-submit">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block custom_script %}
+    <script>
+        $("#form-submit").click(function () {
+            $("#form-create-auction").submit();
+        });
+    </script>
 {% endblock %}

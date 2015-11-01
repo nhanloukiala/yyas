@@ -1,0 +1,7 @@
+# Install with: `pip install -r requirements.txt`
+
+Django>=1.8.4, < 1.9
+django-bootstrap3>=6.2.2
+django-common-helpers>=0.7.0
+django-cron==0.4.3
+djangorestframework>=3.2.4

@@ -1,13 +1,23 @@
 {% extends 'auction/layout.html' %}
 
 {% block content %}
+    {% load i18n %}
     {% load templatehelpers %}
-    <h4>Title : {{ auction.title }}</h4>
-    <p>{{ auction.description }}</p>
-    <h3>Seller : {{ auction.seller.username }}</h3>
-    <h3>End Date : {{ auction.endDate|date:"D d M Y" }} {{ auction.endDate|time:"H:i" }}</h3>
-    <h3>Max Price : {% multiply maxbid displayRate %} &nbsp; {{ request.session.currency }}</h3>
-    <h3>Start Price : {% multiply auction.minPrice displayRate %}&nbsp; {{ request.session.currency }}</h3>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><h2 style="color: red">{{ message }}</h2>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <h4>{% blocktrans %}Title{% endblocktrans %} : {{ auction.title }}</h4>
+    <p> {% blocktrans %}Description{% endblocktrans %} {{ auction.description }}</p>
+    <h3>{% blocktrans %}Seller{% endblocktrans %} : {{ auction.seller.username }}</h3>
+    <h3>{% blocktrans %}End Date{% endblocktrans %}
+        : {{ auction.endDate|date:"D d M Y" }} {{ auction.endDate|time:"H:i" }}</h3>
+    <h3>{% blocktrans %}Start Price{% endblocktrans %}
+        : {% multiply auction.minPrice displayRate %}&nbsp; {{ request.session.currency }}</h3>
 
     {% if user.is_authenticated %}
         {% if auction.isActive %}
@@ -24,20 +34,22 @@
             {% endif %}
 
             {% if is_owner %}
-                <a href="/auction/edit/{{ auction.pk }}">Edit Auction</a>
-            {% endif %}
+                <button type="button" class="btn btn-default"><a href="/auction/edit/{{ auction.pk }}">Edit Auction</a></button>
+            {% else %}
 
-            {#bid form here#}
-            <form method="post" action="{% url 'place_bid' %}">
-                {% csrf_token %}
-                {% bootstrap_form form %}
-                <input type="hidden" name="auction_id" value="{{ auction.pk }}">
-                <button type="submit" class="btn btn-default">Place Bid</button>
-            </form>
+                {#bid form here#}
+                <form method="post" action="{% url 'place_bid' %}">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <input type="hidden" name="auction_id" value="{{ auction.pk }}">
+                    <input type="hidden" name="auction_version" value="{{ auction.version }}">
+                    <button type="submit" class="btn btn-default">Place Bid</button>
+                </form>
+            {% endif %}
         {% elif auction.isBanned %}
             <h4>Auction is banned</h4>
         {% else %}
-            <h4>Auction is resolved</h4>
+            <br><h4 style="color: navy">Auction is resolved - Winner is {{ winner.bidder.username }} with the price {{ winner.price }}</h4>
         {% endif %}
 
         {% for bid in bids %}

@@ -1,16 +1,25 @@
 {% extends 'auction/layout.html' %}
 
+{% load i18n %}
+
 {% block content %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
     {% for auction in auctions %}
         {% load bootstrap3 %}
         {% load templatehelpers %}
         <div class="col-sm-6 col-md-4">
-            <h3>Title : {{ auction.title }}</h3>
+            <h3>{% blocktrans %}Title{% endblocktrans %} : {{ auction.title }}</h3>
 
-            <p>Description : {{ auction.description }}</p> </br>
-            <h6>Max Bid : {% multiply auction.maxPrice displayRate %} &nbsp; {{ request.session.currency }}</h6>
-            <h6>End Date : {{ auction.endDate|date:"jS \o\f F" }}</h6>
-            <h6>Seller : {{ auction.seller.username }}</h6>
+            <p>{% blocktrans %}Description{% endblocktrans %} : {{ auction.description }}</p> </br>
+            <h6>{% blocktrans %}Start Price{% endblocktrans %} : {% multiply auction.minPrice displayRate %} &nbsp; {{ request.session.currency }}</h6>
+            <h6>{% blocktrans %}End Date{%endblocktrans %} : {{ auction.endDate|date:"jS \o\f F" }}</h6>
+            <h6>{% blocktrans %}Seller{% endblocktrans %} : {{ auction.seller.username }}</h6>
 
             <a class="btn btn-primary" href="/auction/{{ auction.pk }}" role="button">View details &raquo;</a>
         </div>
