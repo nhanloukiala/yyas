@@ -4,8 +4,8 @@ Hi,
 
 You can use "install.sh" to install dependencies & establish dump data.
 
-'chmod 777 -R install.sh'
-'./install.sh'
+> chmod 777 -R install.sh </br>
+> ./install.sh'
 
 Hope it saves your time,
 
